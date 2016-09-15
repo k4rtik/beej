@@ -48,7 +48,7 @@ COMMONFLAGS = $(OFLAGS) $(GFLAGS) $(PFLAGS) $(WFLAGS) $(DFLAGS)
 CFLAGS    = -std=gnu11   $(COMMONFLAGS) $(CWFLAGS)
 LDFLAGS	  = -lpthread
 
-EXEC = client server
+EXEC = client server listener talker
 
 .PHONY: all clean
 all: $(EXEC)

@@ -18,7 +18,7 @@
 
 #define BACKLOG 10 // how many pending connections queue will hold
 
-static void sigchld_handler(__attribute__((unused))int s) {
+static void sigchld_handler(__attribute__((unused)) int s) {
     // waitpid() might overwrite errno, so we save and restore it:
     int saved_errno = errno;
 

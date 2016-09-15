@@ -6,6 +6,7 @@
 #include <netdb.h>             // for addrinfo, freeaddrinfo, gai_strerror
 #include <netinet/in.h>        // for INET6_ADDRSTRLEN, sockaddr_in, sockadd...
 #include <stdio.h>             // for printf, fprintf, perror, NULL, stderr
+#include <stdlib.h>            // for exit
 #include <string.h>            // for memset
 #include <sys/socket.h>        // for sockaddr_storage, bind, socket, AF_INET
 #include <unistd.h>            // for close
@@ -15,7 +16,7 @@
 #define MAXBUFLEN 100
 
 // get sockaddr, IPv4 or IPv6:
-void *get_in_addr(struct sockaddr *sa) {
+static void *get_in_addr(struct sockaddr *sa) {
     if (sa->sa_family == AF_INET) {
         return &(((struct sockaddr_in *)sa)->sin_addr);
     }
@@ -27,7 +28,7 @@ int main(void) {
     int sockfd;
     struct addrinfo hints, *servinfo, *p;
     int rv;
-    int numbytes;
+    ssize_t numbytes;
     struct sockaddr_storage their_addr;
     char buf[MAXBUFLEN];
     socklen_t addr_len;
@@ -80,7 +81,7 @@ int main(void) {
     printf("listener: got packet from %s\n",
            inet_ntop(their_addr.ss_family,
                      get_in_addr((struct sockaddr *)&their_addr), s, sizeof s));
-    printf("listener: packet is %d bytes long\n", numbytes);
+    printf("listener: packet is %ld bytes long\n", numbytes);
     buf[numbytes] = '\0';
     printf("listener: packet contains \"%s\"\n", buf);
 

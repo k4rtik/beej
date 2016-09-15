@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     int sockfd;
     struct addrinfo hints, *servinfo, *p;
     int rv;
-    int numbytes;
+    ssize_t numbytes;
 
     if (argc != 3) {
         fprintf(stderr, "usage: talker hostname message\n");
@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 
     freeaddrinfo(servinfo);
 
-    printf("talker: sent %d bytes to %s\n", numbytes, argv[1]);
+    printf("talker: sent %ld bytes to %s\n", numbytes, argv[1]);
     close(sockfd);
 
     return 0;

@@ -1,16 +1,10 @@
 CC = clang
-CXX = clang++
-
-# Choice of compiler flags inspired by Terence's recommended gcc flags list.
-# Organized into sections & eliminated deprecated/redundant flags as of gcc 5.4
 
 ## Debug Options
-DFLAGS = -fsanitize=address -g -D_GLIBCXX_DEBUG
+DFLAGS = -fsanitize=address -g
 
 ## Optimization Options
 OFLAGS  = -O1 -fstack-protector-all
-# included in -O2 and above
-# -fstrict-aliasing -fstrict-overflow
 
 ## Code Generation Options
 GFLAGS  = -ftrapv
@@ -20,27 +14,8 @@ PFLAGS  = -Wendif-labels -Wunused-macros
 
 ## Warning Options
 WFLAGS  = -Wall -Wextra -Wpedantic # essential
-# Included in -Wall
-# -Wimplicit (same as -Wimplicit-int and -Wimplicit-function-declaration)
-#
-# -Waddress -Warray-bounds -Wchar-subscripts -Wenum-compare -Wimplicit-int
-# -Wimplicit-function-declaration -Wcomment -Wformat -Wmain -Wmissing-braces
-# -Wnonnull -Wparentheses -Wpointer-sign -Wreturn-type -Wsequence-point
-# -Wsign-compare -Wstrict-aliasing -Wswitch -Wtrigraphs -Wuninitialized
-# -Wunknown-pragmas -Wunused -Wunused-function -Wunused-label -Wunused-value
-# -Wunused-variable -Wvolatile-register-var -Wunused-but-set-variable
-#
-# Included in -Wextra
-# -Wclobbered -Wempty-body -Wignored-qualifiers -Wmissing-field-initializers
-# -Wmissing-parameter-type -Wold-style-declaration -Woverride-init
-# -Wtype-limits -Wunused-parameter -Wunused-but-set-parameter
-#
-# included in -Wpedantic
-# -Woverlength-strings -Wpointer-arith -Wvariadic-macros
 
 WFLAGS += -Wformat=2
-# Included in -Wformat=2
-# -Wformat-nonliteral -Wformat-security -Wformat-y2k
 
 WFLAGS += -Waggregate-return -Wcast-align -Wcast-qual -Wconversion
 WFLAGS += -Wdisabled-optimization -Wdouble-promotion -Wfloat-equal -Winit-self
@@ -54,8 +29,6 @@ WFLAGS += -Wshadow #-Werror
 
 ### C only
 CWFLAGS  = -Wc++-compat
-# Included in -Wc++-compat
-# -Wjump-misses-init
 
 CWFLAGS += -Wbad-function-cast -Wdeclaration-after-statement
 CWFLAGS += -Wmissing-prototypes -Wnested-externs -Wold-style-definition
@@ -72,16 +45,13 @@ GNUCWFLAGS = -Wtraditional-conversion -Wunsuffixed-float-constants
 COMMONFLAGS = $(OFLAGS) $(GFLAGS) $(PFLAGS) $(WFLAGS) $(DFLAGS)
 
 
-CFLAGS    = -std=c11   $(COMMONFLAGS) $(CWFLAGS)
-CXXFLAGS  = -std=c++11 $(COMMONFLAGS)
+CFLAGS    = -std=gnu11   $(COMMONFLAGS) $(CWFLAGS)
 LDFLAGS	  = -lpthread
 
-SRCS = server.c client.c
-OBJS = $(SRCS:.c=.o)
-EXEC = server client
+EXEC = client server
 
 .PHONY: all clean
 all: $(EXEC)
 
 clean:
-	rm -f $(EXEC) *.o
+	rm -f $(EXEC)

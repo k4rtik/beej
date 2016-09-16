@@ -48,7 +48,8 @@ COMMONFLAGS = $(OFLAGS) $(GFLAGS) $(PFLAGS) $(WFLAGS) $(DFLAGS)
 CFLAGS    = -std=gnu11   $(COMMONFLAGS) $(CWFLAGS)
 LDFLAGS	  = -lpthread
 
-EXEC = client server listener talker
+EXEC = broadcaster client getip ieee754 listener pack pack2 pack2b select \
+       selectserver server showip talker
 
 .PHONY: all clean
 all: $(EXEC)
